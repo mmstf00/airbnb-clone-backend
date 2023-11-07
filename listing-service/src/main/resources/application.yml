@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: order-service
+  banner:
+    location: classpath:banner.txt
+
+server:
+  port: 9090
