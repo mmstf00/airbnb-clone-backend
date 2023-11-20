@@ -3,12 +3,10 @@ package com.airbnb.listingservice.service;
 import com.airbnb.listingservice.entity.Listing;
 import com.airbnb.listingservice.exception.ListingNotFoundException;
 import com.airbnb.listingservice.repository.ListingsRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class ListingsService {
 

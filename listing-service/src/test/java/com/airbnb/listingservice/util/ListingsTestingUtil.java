@@ -5,7 +5,7 @@ import com.airbnb.listingservice.entity.Listing;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class TestingUtil {
+public class ListingsTestingUtil {
 
     public static Listing getListing(Long id) {
         return getListing(id, "Sample Listing");
@@ -23,8 +23,8 @@ public class TestingUtil {
                 .bathroomCount(1)
                 .guestCount(4)
                 .locationValue(5)
-                .userId("user123")
-                .reservationIds(List.of("RES001", "RES002"))
+                .userId(1L)
+                .reservationIds(List.of(1L, 2L))
                 .build();
     }
 }

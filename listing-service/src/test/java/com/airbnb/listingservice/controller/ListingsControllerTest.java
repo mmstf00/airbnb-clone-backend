@@ -13,11 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.List;
 
-import static com.airbnb.listingservice.util.TestingUtil.getListing;
+import static com.airbnb.listingservice.util.ListingsTestingUtil.getListing;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

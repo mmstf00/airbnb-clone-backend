@@ -35,6 +35,6 @@ public class Listing {
     private int locationValue;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> reservationIds = new ArrayList<>();
-    private String userId;
+    private List<Long> reservationIds = new ArrayList<>();
+    private Long userId;
 }

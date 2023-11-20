@@ -1,10 +1,10 @@
 spring:
   application:
-    name: listing-service
+    name: reservations-service
   banner:
     location: classpath:banner.txt
   datasource:
-    url: jdbc:postgresql://localhost:5432/listings-service
+    url: jdbc:postgresql://localhost:5433/reservations-service
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: 1234
@@ -14,4 +14,4 @@ spring:
     open-in-view: false
 
 server:
-  port: 8181
+  port: 8282

@@ -12,6 +12,7 @@
 
     <modules>
         <module>listing-service</module>
+        <module>reservation-service</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>
@@ -25,13 +26,6 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

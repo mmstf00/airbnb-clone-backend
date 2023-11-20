@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.airbnb.listingservice.util.TestingUtil.getListing;
+import static com.airbnb.listingservice.util.ListingsTestingUtil.getListing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -89,9 +88,7 @@ class ListingsServiceTest {
 
         when(listingsRepository.findById(listingId)).thenReturn(Optional.empty());
 
-        assertThrows(ListingNotFoundException.class, () -> {
-            listingsService.deleteListing(listingId);
-        });
+        assertThrows(ListingNotFoundException.class, () -> listingsService.deleteListing(listingId));
     }
 
 }

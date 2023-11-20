@@ -1,13 +1,26 @@
 version: '3.9'
 
 services:
-  postgres:
+  postgres-listings:
+    container_name: postgres-listings
     image: postgres:16-alpine
     environment:
-      - POSTGRES_DB=listing-service
+      - POSTGRES_DB=listings-service
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
     ports:
       - "5432:5432"
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/apps/postgres-listings:/var/lib/postgresql/data
+
+  postgres-reservations:
+    container_name: postgres-reservations
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=reservations-service
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "5433:5432"
+    volumes:
+      - ~/apps/postgres-reservations:/var/lib/postgresql/data
