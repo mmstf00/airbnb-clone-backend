@@ -13,6 +13,7 @@
     <modules>
         <module>listing-service</module>
         <module>reservation-service</module>
+        <module>user-service</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>

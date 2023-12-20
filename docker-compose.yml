@@ -24,3 +24,15 @@ services:
       - "5433:5432"
     volumes:
       - ~/apps/postgres-reservations:/var/lib/postgresql/data
+
+  postgres-users:
+    container_name: postgres-users
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=users-service
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "5434:5432"
+    volumes:
+      - ~/apps/postgres-users:/var/lib/postgresql/data
