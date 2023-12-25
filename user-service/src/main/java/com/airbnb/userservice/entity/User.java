@@ -42,7 +42,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> reservations;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Account> accounts = new ArrayList<>();
 
