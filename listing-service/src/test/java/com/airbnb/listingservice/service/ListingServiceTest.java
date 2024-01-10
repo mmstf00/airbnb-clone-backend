@@ -2,7 +2,7 @@ package com.airbnb.listingservice.service;
 
 import com.airbnb.listingservice.entity.Listing;
 import com.airbnb.listingservice.exception.ListingNotFoundException;
-import com.airbnb.listingservice.repository.ListingsRepository;
+import com.airbnb.listingservice.repository.ListingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,37 +17,37 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-class ListingsServiceTest {
+class ListingServiceTest {
 
     @Mock
-    private ListingsRepository listingsRepository;
+    private ListingRepository listingRepository;
 
-    private ListingsService listingsService;
+    private ListingService listingService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this); // Initialize the annotated mocks
-        listingsService = new ListingsService(listingsRepository);
+        listingService = new ListingService(listingRepository);
     }
 
     @Test
     void testGetListing() {
         Long listingId = 1L;
         Listing expectedListing = getListing(listingId);
-        when(listingsRepository.findById(listingId)).thenReturn(Optional.of(expectedListing));
+        when(listingRepository.findById(listingId)).thenReturn(Optional.of(expectedListing));
 
-        Listing actualListing = listingsService.getListing(listingId);
+        Listing actualListing = listingService.getListing(listingId);
         assertEquals(expectedListing, actualListing);
     }
 
     @Test
     void testGetListingWhenNotExists() {
         Long nonExistentListingId = 2L;
-        when(listingsRepository.findById(nonExistentListingId))
+        when(listingRepository.findById(nonExistentListingId))
                 .thenThrow(new ListingNotFoundException(nonExistentListingId));
 
         assertThrows(ListingNotFoundException.class,
-                () -> listingsService.getListing(nonExistentListingId));
+                () -> listingService.getListing(nonExistentListingId));
     }
 
     @Test
@@ -56,18 +56,18 @@ class ListingsServiceTest {
         expectedListings.add(getListing(1L));
         expectedListings.add(getListing(2L));
 
-        when(listingsRepository.findAll()).thenReturn(expectedListings);
+        when(listingRepository.findAll()).thenReturn(expectedListings);
 
-        List<Listing> actualListings = listingsService.getListings();
+        List<Listing> actualListings = listingService.getListings();
         assertEquals(expectedListings, actualListings);
     }
 
     @Test
     void testCreateListing() {
         Listing newListing = getListing(3L);
-        when(listingsRepository.saveAndFlush(newListing)).thenReturn(newListing);
+        when(listingRepository.saveAndFlush(newListing)).thenReturn(newListing);
 
-        String response = listingsService.createListing(newListing);
+        String response = listingService.createListing(newListing);
         assertEquals("Listing successfully created with ID: 3", response);
     }
 
@@ -75,9 +75,9 @@ class ListingsServiceTest {
     void testDeleteListing() {
         Long listingId = 4L;
 
-        when(listingsRepository.findById(listingId))
+        when(listingRepository.findById(listingId))
                 .thenReturn(Optional.of(Listing.builder().id(listingId).build()));
-        String result = listingsService.deleteListing(listingId);
+        String result = listingService.deleteListing(listingId);
 
         assertEquals("Listing successfully deleted with ID: 4", result);
     }
@@ -86,9 +86,9 @@ class ListingsServiceTest {
     void testDeleteNonExistingListing() {
         Long listingId = 4L;
 
-        when(listingsRepository.findById(listingId)).thenReturn(Optional.empty());
+        when(listingRepository.findById(listingId)).thenReturn(Optional.empty());
 
-        assertThrows(ListingNotFoundException.class, () -> listingsService.deleteListing(listingId));
+        assertThrows(ListingNotFoundException.class, () -> listingService.deleteListing(listingId));
     }
 
 }

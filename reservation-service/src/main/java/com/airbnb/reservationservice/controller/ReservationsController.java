@@ -1,7 +1,7 @@
 package com.airbnb.reservationservice.controller;
 
 import com.airbnb.reservationservice.entity.Reservation;
-import com.airbnb.reservationservice.service.ReservationsService;
+import com.airbnb.reservationservice.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,26 +13,26 @@ import java.util.List;
 @RequestMapping("/api/v1/reservations")
 public class ReservationsController {
 
-    private final ReservationsService reservationsService;
+    private final ReservationService reservationService;
 
     @GetMapping
     public List<Reservation> getAll() {
-        return reservationsService.getReservations();
+        return reservationService.getReservations();
     }
 
     @GetMapping("/{id}")
     public Reservation getById(@PathVariable Long id) {
-        return reservationsService.getReservation(id);
+        return reservationService.getReservation(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String makeReservation(@RequestBody Reservation reservation) {
-        return reservationsService.makeReservation(reservation);
+        return reservationService.makeReservation(reservation);
     }
 
     @DeleteMapping("/{id}")
     public String deleteReservation(@PathVariable Long id) {
-        return reservationsService.deleteReservation(id);
+        return reservationService.deleteReservation(id);
     }
 }

@@ -2,7 +2,7 @@ package com.airbnb.reservationservice.controller;
 
 import com.airbnb.reservationservice.entity.Reservation;
 import com.airbnb.reservationservice.exception.ReservationNotFoundException;
-import com.airbnb.reservationservice.service.ReservationsService;
+import com.airbnb.reservationservice.service.ReservationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ class ReservationsControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ReservationsService reservationsService;
+    private ReservationService reservationService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -38,7 +38,7 @@ class ReservationsControllerTest {
 
     @Test
     void testGetAllReservations() throws Exception {
-        when(reservationsService.getReservations()).thenReturn(
+        when(reservationService.getReservations()).thenReturn(
                 Arrays.asList(
                         getReservation(1L, BigDecimal.valueOf(123)),
                         getReservation(2L, BigDecimal.valueOf(345))
@@ -56,7 +56,7 @@ class ReservationsControllerTest {
 
     @Test
     void testGetReservationById() throws Exception {
-        when(reservationsService.getReservation(1L))
+        when(reservationService.getReservation(1L))
                 .thenReturn(getReservation(1L, BigDecimal.valueOf(123)));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/reservations/1"))
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ class ReservationsControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.totalPrice").value(123));
 
-        when(reservationsService.getReservation(2L))
+        when(reservationService.getReservation(2L))
                 .thenReturn(getReservation(2L, BigDecimal.valueOf(345)));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/reservations/2"))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ class ReservationsControllerTest {
                 .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.totalPrice").value(345));
 
-        when(reservationsService.getReservation(3L))
+        when(reservationService.getReservation(3L))
                 .thenThrow(new ReservationNotFoundException(3L));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/reservations/3"))
                 .andExpect(status().isNotFound());
@@ -83,7 +83,7 @@ class ReservationsControllerTest {
         Reservation newReservation = getReservation(3L, BigDecimal.valueOf(678));
         String successResponse = "Reservation successfully created with ID: 3";
 
-        when(reservationsService.makeReservation(any(Reservation.class))).thenReturn(successResponse);
+        when(reservationService.makeReservation(any(Reservation.class))).thenReturn(successResponse);
         mockMvc.perform(MockMvcRequestBuilders.post(API_ENDPOINT + "/reservations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newReservation)))
@@ -95,18 +95,18 @@ class ReservationsControllerTest {
     void testDeleteReservation() throws Exception {
         String successResponse = "Reservation successfully deleted with ID: 4";
 
-        when(reservationsService.deleteReservation(4L)).thenReturn(successResponse);
+        when(reservationService.deleteReservation(4L)).thenReturn(successResponse);
         mockMvc.perform(MockMvcRequestBuilders.delete(API_ENDPOINT + "/reservations/4"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Reservation successfully deleted with ID: 4"));
 
         // Verify that the deleteReservation method was called
-        verify(reservationsService, times(1)).deleteReservation(4L);
+        verify(reservationService, times(1)).deleteReservation(4L);
     }
 
     @Test
     void testDeleteNonExistingReservation() throws Exception {
-        when(reservationsService.deleteReservation(45L))
+        when(reservationService.deleteReservation(45L))
                 .thenThrow(new ReservationNotFoundException(45L));
 
         mockMvc.perform(MockMvcRequestBuilders.delete(API_ENDPOINT + "/reservations/45"))
@@ -115,6 +115,6 @@ class ReservationsControllerTest {
                 .andExpect(jsonPath("$.message").value("Reservation not found"));
 
         // Verify that the deleteReservation method was called
-        verify(reservationsService, times(1)).deleteReservation(45L);
+        verify(reservationService, times(1)).deleteReservation(45L);
     }
 }

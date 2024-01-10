@@ -3,6 +3,7 @@ package com.airbnb.listingservice.util;
 import com.airbnb.listingservice.entity.Listing;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ListingsTestingUtil {
@@ -19,6 +20,7 @@ public class ListingsTestingUtil {
                 .imageSrc("sample.jpg")
                 .category("Sample Category")
                 .price(new BigDecimal("100.00"))
+                .createdAt(LocalDateTime.now())
                 .roomCount(2)
                 .bathroomCount(1)
                 .guestCount(4)

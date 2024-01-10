@@ -1,0 +1,31 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.airbnb.proto.listing;
+
+import "google/protobuf/timestamp.proto";
+
+message ListingMessage {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  string image_src = 4;
+  string category = 5;
+  string price = 6;
+  google.protobuf.Timestamp created_at = 7;
+  int32 room_count = 8;
+  int32 bathroom_count = 9;
+  int32 guest_count = 10;
+  int32 location_value = 11;
+  repeated int64 reservation_ids = 12;
+
+  // ID of the user associated with this listing
+  int64 user_id = 13;
+}
+
+message GetListingRequest {
+  int64 id = 1;
+}
+
+service ListingService {
+  rpc getListing(GetListingRequest) returns (ListingMessage);
+}

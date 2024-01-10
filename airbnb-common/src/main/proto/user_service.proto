@@ -1,0 +1,48 @@
+syntax = "proto3";
+package com.airbnb.proto.users;
+option java_multiple_files = true;
+
+import "google/protobuf/timestamp.proto";
+
+message UserMessage {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+  google.protobuf.Timestamp email_verified_at = 4;
+  string image_src = 5;
+  string hashed_password = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+
+  repeated int64 favorites = 9;
+  repeated int64 listings = 10;
+  repeated int64 reservations = 11;
+
+  // Accounts associated with this User
+  repeated AccountMessage accounts = 12;
+}
+
+message AccountMessage {
+  int64 id = 1;
+  string type = 2;
+  string provider = 3;
+  string provider_account_id = 4;
+  string refresh_token = 5;
+  string access_token = 6;
+  string token_type = 7;
+  string scope = 8;
+  string id_token = 9;
+  string session_state = 10;
+  int32 expires_at = 11;
+
+  // User associated with this Account
+  UserMessage user = 12;
+}
+
+message GetUserRequest {
+  int64 id = 1;
+}
+
+service UserService {
+  rpc getUser(GetUserRequest) returns (UserMessage);
+}

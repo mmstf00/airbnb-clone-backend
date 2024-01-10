@@ -1,0 +1,25 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.airbnb.proto.reservations;
+
+import "google/protobuf/timestamp.proto";
+
+message ReservationMessage {
+  int64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  string total_price = 5;
+
+  // IDs of the Listing and User associated with this reservation
+  int64 listing_id = 6;
+  int64 user_id = 7;
+}
+
+message GetReservationRequest {
+  int64 id = 1;
+}
+
+service ReservationService {
+  rpc getReservation(GetReservationRequest) returns (ReservationMessage);
+}

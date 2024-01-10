@@ -2,7 +2,7 @@ package com.airbnb.listingservice.controller;
 
 import com.airbnb.listingservice.entity.Listing;
 import com.airbnb.listingservice.exception.ListingNotFoundException;
-import com.airbnb.listingservice.service.ListingsService;
+import com.airbnb.listingservice.service.ListingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class ListingsControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ListingsService listingsService;
+    private ListingService listingService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -37,7 +37,7 @@ class ListingsControllerTest {
 
     @Test
     void testGetAllListings() throws Exception {
-        when(listingsService.getListings()).thenReturn(
+        when(listingService.getListings()).thenReturn(
                 Arrays.asList(
                         getListing(1L, "Listing 1"),
                         getListing(2L, "Listing 2")
@@ -55,21 +55,21 @@ class ListingsControllerTest {
 
     @Test
     void testGetListingById() throws Exception {
-        when(listingsService.getListing(1L)).thenReturn(getListing(1L, "Listing 1"));
+        when(listingService.getListing(1L)).thenReturn(getListing(1L, "Listing 1"));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/listings/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.title").value("Listing 1"));
 
-        when(listingsService.getListing(2L)).thenReturn(getListing(2L, "Listing 2"));
+        when(listingService.getListing(2L)).thenReturn(getListing(2L, "Listing 2"));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/listings/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.title").value("Listing 2"));
 
-        when(listingsService.getListing(3L))
+        when(listingService.getListing(3L))
                 .thenThrow(new ListingNotFoundException(3L));
         mockMvc.perform(MockMvcRequestBuilders.get(API_ENDPOINT + "/listings/3"))
                 .andExpect(status().isNotFound());
@@ -80,7 +80,7 @@ class ListingsControllerTest {
         Listing newListing = getListing(3L, "Listing 3");
         String successResponse = "Listing successfully created with ID: 3";
 
-        when(listingsService.createListing(any(Listing.class))).thenReturn(successResponse);
+        when(listingService.createListing(any(Listing.class))).thenReturn(successResponse);
         mockMvc.perform(MockMvcRequestBuilders.post(API_ENDPOINT + "/listings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newListing)))
@@ -92,18 +92,18 @@ class ListingsControllerTest {
     void testDeleteListing() throws Exception {
         String successResponse = "Listing successfully deleted with ID: 4";
 
-        when(listingsService.deleteListing(4L)).thenReturn(successResponse);
+        when(listingService.deleteListing(4L)).thenReturn(successResponse);
         mockMvc.perform(MockMvcRequestBuilders.delete(API_ENDPOINT + "/listings/4"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Listing successfully deleted with ID: 4"));
 
         // Verify that the deleteListing method was called
-        verify(listingsService, times(1)).deleteListing(4L);
+        verify(listingService, times(1)).deleteListing(4L);
     }
 
     @Test
     void testDeleteNonExistingListing() throws Exception {
-        when(listingsService.deleteListing(45L))
+        when(listingService.deleteListing(45L))
                 .thenThrow(new ListingNotFoundException(45L));
 
         mockMvc.perform(MockMvcRequestBuilders.delete(API_ENDPOINT + "/listings/45"))
@@ -112,7 +112,7 @@ class ListingsControllerTest {
                 .andExpect(jsonPath("$.message").value("Listing not found"));
 
         // Verify that the deleteListing method was called
-        verify(listingsService, times(1)).deleteListing(45L);
+        verify(listingService, times(1)).deleteListing(45L);
     }
 
 }
