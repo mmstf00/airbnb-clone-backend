@@ -84,35 +84,6 @@ class AsyncAggregatorServiceTest {
         verify(reservationStub, times(1)).getReservation(any());
         assertNotNull(response);
     }
-//
-//    @Test
-//    void testGetFavoriteListingsForUser() {
-//        // Mocking gRPC responses
-//        UserMessage userMessage = UserMessage.newBuilder()
-//                .setId(1L)
-//                .addFavorites(101L)
-//                .addFavorites(102L)
-//                .addFavorites(103L)
-//                .build();
-//        when(userStub.getUser(any())).thenReturn(userMessage);
-//        when(listingStub.getListing(any()))
-//                .thenReturn(ListingMessage.newBuilder().setId(101L).setPrice("20").build())
-//                .thenReturn(ListingMessage.newBuilder().setId(102L).setPrice("21").build())
-//                .thenReturn(ListingMessage.newBuilder().setId(103L).setPrice("22").build());
-//
-//        // Creating a sample user ID
-//        long userId = 1L;
-//
-//        // Performing the test
-//        FavoriteListingsResponse response = asyncAggregatorService.getFavoriteListingsForUser(userId);
-//
-//        // Add assertions as per your business logic
-//        List<ListingDTO> favoriteListings = response.getFavorites();
-//        assertEquals(3, favoriteListings.size());
-//        assertEquals(101L, favoriteListings.get(0).getId());
-//        assertEquals(102L, favoriteListings.get(1).getId());
-//        assertEquals(103L, favoriteListings.get(2).getId());
-//    }
 
     @Test
     void testGetFavoriteListingsForUser() {
