@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: aggregator-service
+  banner:
+    location: classpath:banner.txt
+
+server:
+  port: 7171
+
+# gRPC
+grpc:
+  client:
+    listing-service:
+      address: 'static://localhost:9191'
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
+
+    reservation-service:
+      address: 'static://localhost:9292'
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
+
+    user-service:
+      address: 'static://localhost:9393'
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
