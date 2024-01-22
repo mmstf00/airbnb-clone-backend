@@ -4,9 +4,6 @@ spring:
   banner:
     location: classpath:banner.txt
 
-server:
-  port: 7171
-
 # gRPC
 grpc:
   client:
@@ -27,3 +24,12 @@ grpc:
       enable-keep-alive: true
       keep-alive-without-calls: true
       negotiation-type: plaintext
+
+server:
+  port: 0
+
+# Eureka client config
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

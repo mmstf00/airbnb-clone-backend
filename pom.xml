@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.0.9</version> <!--  Spring Cloud is compatible with only version 3.0.x -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -16,6 +16,7 @@
         <module>user-service</module>
         <module>airbnb-common</module>
         <module>aggregator-service</module>
+        <module>discovery-service</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>
@@ -29,6 +30,18 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2022.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
