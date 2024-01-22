@@ -17,6 +17,7 @@
         <module>airbnb-common</module>
         <module>aggregator-service</module>
         <module>discovery-service</module>
+        <module>api-gateway</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>

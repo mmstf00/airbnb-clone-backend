@@ -1,6 +1,6 @@
 spring:
   application:
-    name: reservations-service
+    name: reservation-service
   banner:
     location: classpath:banner.txt
   datasource:
