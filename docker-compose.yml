@@ -69,3 +69,10 @@ services:
       - ./realms/:/opt/keycloak/data/import/
     depends_on:
       - keycloak-mysql-airbnb
+
+  ## Discovery Server logs Warnings if Zipkin is not started
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"

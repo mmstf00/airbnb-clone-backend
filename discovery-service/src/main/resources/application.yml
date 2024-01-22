@@ -3,6 +3,10 @@ spring:
     name: service-discovery
   banner:
     location: classpath:banner.txt
+  security:
+    user:
+      name: eureka
+      password: password
 
 eureka:
   instance:
@@ -10,5 +14,20 @@ eureka:
   client:
     register-with-eureka: false # To prevent registering the server itself as a client
     fetch-registry: false # The server maintains its registry locally
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
 server:
   port: 8761
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId:-},%X{spanId:-}]"
